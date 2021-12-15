@@ -2,7 +2,7 @@
 <suite parallel="false" name="Suite">
     <test name="Test">
         <classes>
-            <class name="com.haeger.FilterTests"/>
+            <class name="com.haeger.CustomerAdministrationTest"/>
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->

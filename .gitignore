@@ -1,39 +1,6 @@
-target/screenshot.png
-target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
-target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
-target/surefire-reports/bullet_point.png
-target/surefire-reports/collapseall.gif
-target/surefire-reports/com.haeger.NavigationTest.txt
-target/surefire-reports/emailable-report.html
-target/surefire-reports/failed.png
-target/surefire-reports/index.html
-target/surefire-reports/jquery-1.7.1.min.js
-target/surefire-reports/navigator-bullet.png
-target/surefire-reports/passed.png
-target/surefire-reports/skipped.png
-target/surefire-reports/TEST-com.haeger.NavigationTest.xml
-target/surefire-reports/testng-reports.css
-target/surefire-reports/testng-reports.js
-target/surefire-reports/testng-results.xml
-target/surefire-reports/testng.css
-target/surefire-reports/com.haeger.NavigationTest/Command line test.html
-target/surefire-reports/com.haeger.NavigationTest/Command line test.xml
-target/surefire-reports/junitreports/TEST-com.haeger.NavigationTest.xml
-target/surefire-reports/old/index.html
-target/surefire-reports/old/com.haeger.NavigationTest/classes.html
-target/surefire-reports/old/com.haeger.NavigationTest/Command line test.properties
-target/surefire-reports/old/com.haeger.NavigationTest/groups.html
-target/surefire-reports/old/com.haeger.NavigationTest/index.html
-target/surefire-reports/old/com.haeger.NavigationTest/main.html
-target/surefire-reports/old/com.haeger.NavigationTest/methods-alphabetical.html
-target/surefire-reports/old/com.haeger.NavigationTest/methods-not-run.html
-target/surefire-reports/old/com.haeger.NavigationTest/methods.html
-target/surefire-reports/old/com.haeger.NavigationTest/reporter-output.html
-target/surefire-reports/old/com.haeger.NavigationTest/testng.xml.html
-target/surefire-reports/old/com.haeger.NavigationTest/toc.html
-target/test-classes/com/haeger/AddressBookHomePage.class
-target/test-classes/com/haeger/GoogleSearchResultPage.class
-target/test-classes/com/haeger/NavigationTest.class
-target/test-classes/com/haeger/tests/NavigationTest.class
-target/test-classes/drivers/chromedriver
-target/test-classes/drivers/geckodriver
+target/
+target/test-classes/com/haeger/FilterTests.class
+target/test-classes/com/haeger/pages/AddressBookHomePage.class
+target/test-classes/com/haeger/pages/AddressBookSearchResultView.class
+target/test-classes/com/haeger/tests/FilterTests.class
+target/test-classes/src/test/resources/suites/testng.xml

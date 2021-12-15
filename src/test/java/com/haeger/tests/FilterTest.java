@@ -18,7 +18,7 @@ import com.haeger.AddressBookHomePage;
 
 import org.apache.commons.io.FileUtils;
 
-public class FilterTests {
+public class FilterTest {
 
     WebDriver driver;
     AddressBookHomePage addressBookHomePage;
