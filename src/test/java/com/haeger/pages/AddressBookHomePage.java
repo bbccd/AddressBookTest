@@ -2,6 +2,10 @@ package com.haeger;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By.ByClassName;
+
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -15,6 +19,9 @@ public class AddressBookHomePage {
 
     @FindBy(id = "tfFilter")
     WebElement searchField;
+
+    @FindBy(id = "btnClearFilter")
+    WebElement searchResetButton;
 
     // @FindBy(xpath = "/html/body/div[1]/div[3]/form/div[1]/div[1]/div[2]/div[2]/div[5]/center/input[2]")
     // WebElement searchButton;
@@ -32,6 +39,20 @@ public class AddressBookHomePage {
         // searchButtonNow.click();
         return; // PageFactory.initElements(driver,
                 // GoogleSearchResultPage.class);
+    }
+
+    public int countFilterResults() {
+        // List <WebElement> filterResultsList = driver.findElements(By.className("v-grid-row-has-data"));
+        // List <WebElement> filterResultsList = driver.findElements(By.xpath("//table/tbody/tr [@class='v-grid-row-has-data']"));
+        List <WebElement> filterResultsList = driver.findElements(By.cssSelector("tr.v-grid-row-has-data"));
+        //v-grid-row-has-data
+        System.out.println("Counting filter results: " + filterResultsList.size());
+        // System.out.println(filterResultsList);
+        return filterResultsList.size();
+    }
+
+    public void resetSearch() {
+        searchResetButton.click();
     }
 
     // public void closeModalBeforeYouContinueDialog() {

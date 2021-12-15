@@ -5,11 +5,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class GoogleSearchResultPage {
+public class AddressBookSearchResultView {
 
     WebDriver driver;
 
-    public GoogleSearchResultPage (WebDriver driver) {
+    public AddressBookSearchResultView (WebDriver driver) {
         this.driver = driver;
         //Initialise Elements
         // PageFactory.initElements(driver, this);
