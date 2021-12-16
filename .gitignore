@@ -1,4 +1,10 @@
 target/
+
+target/test-classes/com/haeger/FilterTests.class
+target/test-classes/com/haeger/pages/AddressBookHomePage.class
+target/test-classes/com/haeger/pages/AddressBookSearchResultView.class
+target/test-classes/com/haeger/tests/FilterTests.class
+target/test-classes/src/test/resources/suites/testng.xml
 target/test-classes/com/haeger/FilterTests.class
 target/test-classes/com/haeger/pages/AddressBookHomePage.class
 target/test-classes/com/haeger/pages/AddressBookSearchResultView.class

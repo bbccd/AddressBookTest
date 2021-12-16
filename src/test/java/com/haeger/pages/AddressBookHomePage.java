@@ -25,6 +25,9 @@ public class AddressBookHomePage {
     @FindBy(id = "btnClearFilter")
     WebElement searchResetButton;
 
+    @FindBy(id = "addNewCustomer")
+    WebElement addNewCustomerButton;
+
     public AddressBookHomePage (WebDriver driver) {
         this.driver = driver;
         driver.get(PAGE_URL);
@@ -47,6 +50,11 @@ public class AddressBookHomePage {
 
     public void resetSearch() {
         searchResetButton.click();
+    }
+
+    public AddressBookFormView addNewCustomer() {
+        addNewCustomerButton.click();
+        return PageFactory.initElements(driver, AddressBookFormView.class);
     }
 
     /**

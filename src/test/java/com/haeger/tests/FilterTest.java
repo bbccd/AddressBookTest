@@ -18,11 +18,11 @@ import com.haeger.AddressBookHomePage;
 
 import org.apache.commons.io.FileUtils;
 
-@Test(enabled = false)
+@Test(enabled = true)
 public class FilterTest {
 
     WebDriver driver;
-    AddressBookHomePage addressBookHomePage;
+    AddressBookHomePage homePage;
 
     // String url = "192.168.0.10";
     // String port = "8080";
@@ -37,6 +37,7 @@ public class FilterTest {
         
         // initialize new WebDriver session:
         driver = new ChromeDriver(); // FirefoxDriver();
+        homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
     }
 
     @AfterMethod
@@ -45,7 +46,7 @@ public class FilterTest {
     }
 
     public void findExistingCustomerByLastName() throws IOException, InterruptedException  {
-        AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
+        // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
         // execute the search:
         homePage.search(searchTermExistingCustomerLastName);
@@ -63,7 +64,7 @@ public class FilterTest {
     }
 
     public void findExistingCustomerByFirstName() throws IOException, InterruptedException  {
-        AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
+        // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
         // execute the search:
         homePage.search(searchTermExistingCustomerFirstName);
@@ -81,7 +82,7 @@ public class FilterTest {
     }
 
     public void filterNonExistingCustomerComesUpEmpty() throws IOException, InterruptedException  {
-        AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
+        // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
         // create UUID as name of customer guaranteed not to exist
         String uuid = UUID.randomUUID().toString();
@@ -102,7 +103,7 @@ public class FilterTest {
     }
 
     public void resetFilterResetsResultsList() throws IOException, InterruptedException  {
-        AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
+        // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
         // create UUID as name of customer guaranteed not to exist
         String uuid = UUID.randomUUID().toString();
