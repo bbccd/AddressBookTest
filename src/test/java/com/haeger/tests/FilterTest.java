@@ -18,6 +18,7 @@ import com.haeger.AddressBookHomePage;
 
 import org.apache.commons.io.FileUtils;
 
+@Test(enabled = false)
 public class FilterTest {
 
     WebDriver driver;
@@ -43,7 +44,6 @@ public class FilterTest {
         driver.quit();
     }
 
-    @Test
     public void findExistingCustomerByLastName() throws IOException, InterruptedException  {
         AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
@@ -62,7 +62,6 @@ public class FilterTest {
         FileUtils.copyFile(scrFile, new File("./target/screenshot_findExistingCustomerByLastName.png"));
     }
 
-    @Test
     public void findExistingCustomerByFirstName() throws IOException, InterruptedException  {
         AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
@@ -81,7 +80,6 @@ public class FilterTest {
         FileUtils.copyFile(scrFile, new File("./target/screenshot_findExistingCustomerByFirstName.png"));
     }
 
-    @Test
     public void filterNonExistingCustomerComesUpEmpty() throws IOException, InterruptedException  {
         AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
@@ -103,7 +101,6 @@ public class FilterTest {
         FileUtils.copyFile(scrFile, new File("./target/screenshot_filterNonExistingCustomerComesUpEmpty.png"));
     }
 
-    @Test
     public void resetFilterResetsResultsList() throws IOException, InterruptedException  {
         AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
