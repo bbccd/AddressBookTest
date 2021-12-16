@@ -66,7 +66,7 @@ public class CustomerAdministrationTest {
         // filter for last name and open the editor (form) view:
         AddressBookFormView editView = homePage.filterByLastNameAndOpenEditFormViewFromFilterResultRowByLastName(searchTermExistingCustomerLastName);
         
-        // wait for 1 s to allow results to arrive:
+        // wait for 1 s to allow page to load:
         Thread.sleep(1000);
 
         // do the editing:

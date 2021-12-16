@@ -26,8 +26,8 @@ public class FilterTest {
 
     // String url = "192.168.0.10";
     // String port = "8080";
-    String searchTermExistingCustomerLastName = "Olsen";
-    String searchTermExistingCustomerFirstName = "Katelyn";
+    
+    
 
     @BeforeMethod
     public void beforeMethod() throws IOException {
@@ -48,6 +48,11 @@ public class FilterTest {
     public void findExistingCustomerByLastName() throws IOException, InterruptedException  {
         // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
+        String searchTermExistingCustomerLastName = "Olsen";
+
+        // wait for 1 s to allow page to load:
+        Thread.sleep(1000);
+
         // execute the search:
         homePage.search(searchTermExistingCustomerLastName);
 
@@ -65,6 +70,11 @@ public class FilterTest {
 
     public void findExistingCustomerByFirstName() throws IOException, InterruptedException  {
         // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
+
+        String searchTermExistingCustomerFirstName = "Katelyn";
+
+        // wait for 1 s to allow page to load:
+        Thread.sleep(1000);
 
         // execute the search:
         homePage.search(searchTermExistingCustomerFirstName);
@@ -87,6 +97,9 @@ public class FilterTest {
         // create UUID as name of customer guaranteed not to exist
         String uuid = UUID.randomUUID().toString();
 
+        // wait for 1 s to allow page to load:
+        Thread.sleep(1000);
+
         // execute the search:
         homePage.search(uuid);
 
@@ -108,6 +121,9 @@ public class FilterTest {
         // create UUID as name of customer guaranteed not to exist
         String uuid = UUID.randomUUID().toString();
 
+        // wait for 1 s to allow page to load:
+        Thread.sleep(1000);
+
         // execute the search:
         homePage.search(uuid);
 
@@ -120,6 +136,9 @@ public class FilterTest {
 
         // reset search filter:
         homePage.resetSearch();
+
+        // wait for 1 s to allow results to arrive:
+        Thread.sleep(1000);
 
         // assert that datasets are displayed again in list:
         int numberOfResults = homePage.countFilterResults();
