@@ -33,19 +33,13 @@ public class AddressBookHomePage {
         driver.get(PAGE_URL);
     }
 
+
+    // Page Functions
     public void search(String searchTerm) {
         searchField.click();
         searchField.clear();
         searchField.sendKeys(searchTerm);
         return;
-    }
-
-    public int countFilterResults() {
-        // List <WebElement> filterResultsList = driver.findElements(By.className("v-grid-row-has-data"));
-        // List <WebElement> filterResultsList = driver.findElements(By.xpath("//table/tbody/tr [@class='v-grid-row-has-data']"));
-        List <WebElement> filterResultsList = driver.findElements(By.cssSelector("tr.v-grid-row-has-data"));
-        System.out.println("Counting filter results: " + filterResultsList.size());
-        return filterResultsList.size();
     }
 
     public void resetSearch() {
@@ -57,48 +51,18 @@ public class AddressBookHomePage {
         return PageFactory.initElements(driver, AddressBookFormView.class);
     }
 
-    /**
-     * Method filters the customer list by a last name, and clicks on the first row in which the search string is contained 
-     * in the column "last name" to open the edit function. 
-     * It then returns an instance of the Page Object Model for the edit form view.
-     * USE CASE: when data set shall be found by last name. It still selects the first available row.
-     * TODO: Will crash if no items are found (since empty list is not handled properly)
-     * @param lastName: String. Could be just a few characters, or full last name
-     * @return
-     */
-    public AddressBookFormView filterByLastNameAndOpenEditFormViewFromFilterResultRowByLastName(String lastName) throws InterruptedException {
-        resetSearch();
-        search(lastName);
-        // wait for 1 s to allow results to arrive:
-        Thread.sleep(1000);
-        AddressBookFormView form = openEditFormViewFromFilterResultRowByLastName(lastName);
-        return form;
-    }
 
     /**
-     * Method filters the customer list by a name, and clicks on the first row to open the edit function. 
+     * Method filters the database for a full name (first and last name, with a SPACE in between), and clicks on the first result row.
      * It then returns an instance of the Page Object Model for the edit form view.
-     * Filtering searches both first and last name. So, if only a few charcters are supplied, this may return a number of data sets.
-     * On the other hand, a full name (first name, folled by last name, with space in between) returns that data set.
-     * USE CASES: 
-     *      1. when the exact dataset to edit is not crucial (just anything to edit).
-     *      2. searching for exact name (first and last name)
-     * @param name: String. Could be just a few characters, or first and last name (divided by space)
-     * @return
+     * TODO: Assumingly will crash if no items are found (since empty list is not handled properly)
+     * @param firstName: String. MUST be full first name to match
+     * @param lastName: String.
+     * @return AddressBookFormView: an instance of the Page Object Model for the edit form view
+     * @throws InterruptedException
      */
-    public AddressBookFormView openEditFormViewFromFilterResultRowByName(String name) {
-        List <WebElement> filterResultsList = driver.findElements(By.cssSelector("tr.v-grid-row-has-data"));
-        if (!filterResultsList.isEmpty()) {
-            System.out.println("Counting filter results: " + filterResultsList.size());
-            WebElement nameTableItem = filterResultsList.get(0);
-            nameTableItem.click();
-        }
-        return PageFactory.initElements(driver, AddressBookFormView.class);
-    }
-
     public AddressBookFormView filterByFullNameAndOpenEditFormViewFromFilterResultRowByFullName(String firstName, String lastName) throws InterruptedException {
         String fullName = firstName + " " + lastName;
-        System.out.println("Filtering for full name: " + fullName);
         resetSearch();
         search(fullName);
         // wait for 1 s to allow results to arrive:
@@ -112,33 +76,62 @@ public class AddressBookHomePage {
         return PageFactory.initElements(driver, AddressBookFormView.class);
     }
 
-    public AddressBookFormView openEditFormViewFromFilterResultRowByLastName(String lastName) throws InterruptedException {
+
+    /**
+     * Method filters the customer list by a last name, and then finds the first row in which this supplied String is contained in the column "last name"
+     * by exact match, and clicks on it to open the edit functionalty UI. 
+     * It then returns an instance of the Page Object Model for the edit form view.
+     * USE CASE: when data set shall be found by last name. It still selects the first available row with that last name.
+     * NOTE: The full last name must be supplied, because the search of the correct row finds it by exact String comparison ("equals").
+     * TODO: Will crash if no items are found (since empty list is not handled properly)
+     * @param lastName: String. MUST be full last name to match!
+     * @return AddressBookFormView: an instance of the Page Object Model for the edit form view
+     * @throws InterruptedException
+     */
+    public AddressBookFormView filterByLastNameAndOpenEditFormViewFromFilterResultRowByLastName(String lastName) throws InterruptedException {
+        resetSearch();
+        search(lastName);
+        // wait for 1 s to allow results to arrive:
+        Thread.sleep(1000);
+        AddressBookFormView form = openEditFormViewFromFilterResultRowByLastName(lastName);
+        return form;
+    }
+
+
+    /**
+     * Helper function to click on the first available filter result row on which the supplied string is contained in the column "last name"
+     * by exact String match. (NOTE: do parts of names can be matched! I.e.: last name "Andersson" can only be found by String "Andersson", not e.g. "Ander"!)
+     * @param lastName: String
+     * @return AddressBookFormView: an instance of the Page Object Model for the edit form view
+     * @throws InterruptedException
+     */
+    private AddressBookFormView openEditFormViewFromFilterResultRowByLastName(String lastName) throws InterruptedException {
         List <WebElement> filterResultsList = driver.findElements(By.cssSelector("tr.v-grid-row-has-data"));
         if (!filterResultsList.isEmpty()) {
-            System.out.println("Counting filter results: " + filterResultsList.size());
             // iterate through list items ("rows" of table):
             for (WebElement listItem : filterResultsList) {
                 List <WebElement> tableRowDataItems = listItem.findElements(By.cssSelector("td.v-grid-cell"));
-                // iterate through columns of current row ("table data" items):
-                WebElement lastNameColumnItem = tableRowDataItems.get(1);
-                // for (WebElement columnItem : filterResultsList) {
-                    String itemInnerHTML = lastNameColumnItem.getText(); // getAttribute("value");
-                    System.out.println("Checking table data item: " + itemInnerHTML);
+                // get 2nd column of current row ("table data" item) - this is the column listing the "last name":
+                String itemInnerHTML = tableRowDataItems.get(1).getText();
                     if (itemInnerHTML.equals(lastName)) {
-                        System.out.println("Found item " + lastName + " in dropdown list item: " + itemInnerHTML);
-                        // String cssSelector = String.format("option[value='%s']", newStatusValue);
-                        // WebElement selectField = statusSelect.findElement(By.cssSelector(cssSelector)); //"option[value='4']"));
                         listItem.click();
                         Thread.sleep(1000);
                         break;
                     }
-                // }
             }
         }
-        // if nothing was found, open first row (IS THIS GOOD?):
-        //WebElement nameTableItem = filterResultsList.get(0);
-        //nameTableItem.click();
         return PageFactory.initElements(driver, AddressBookFormView.class);
+    }
+
+    
+
+    // readout methods (used to obtain current values for assertions):
+    public int countFilterResults() {
+        // List <WebElement> filterResultsList = driver.findElements(By.className("v-grid-row-has-data"));
+        // List <WebElement> filterResultsList = driver.findElements(By.xpath("//table/tbody/tr [@class='v-grid-row-has-data']"));
+        List <WebElement> filterResultsList = driver.findElements(By.cssSelector("tr.v-grid-row-has-data"));
+        // System.out.println("Counting filter results: " + filterResultsList.size());
+        return filterResultsList.size();
     }
 
 }

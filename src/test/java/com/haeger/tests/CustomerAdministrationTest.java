@@ -32,7 +32,6 @@ public class CustomerAdministrationTest {
 
     Locale systemLocale = Locale.getDefault();
 
-
     @BeforeMethod
     public void beforeMethod() throws IOException {
         // set path of driver executables:
@@ -51,14 +50,15 @@ public class CustomerAdministrationTest {
 
 
     @Test(enabled = true)
-    public void editExistingCustomerOnFirstName() throws IOException, InterruptedException, ParseException  {
+    public void whenFilterExistingCustomerOnFirstName_editExistingCustomer_saveViaButtonSucceeds() throws IOException, InterruptedException, ParseException  {
 
         // Define test data:
         String searchTermExistingCustomerLastName = "Andersson";
         String newFirstName = "Jerry";
         String newEmail = "jerry@andersson.com";
         String newStatus = "ClosedLost"; // Customer // ImportedLead  // ClosedLost
-        Date newBirthday = new SimpleDateFormat("dd/MM/yyyy").parse("23/08/1974");
+        Date newBirthday = new SimpleDateFormat("dd/MM/yyyy").parse("01/12/1983");
+        String newBirthdayString = getFormattedDateString(newBirthday, systemLocale);
 
         // wait for 1 s for page to load:
         Thread.sleep(1000);
@@ -71,7 +71,7 @@ public class CustomerAdministrationTest {
 
         // do the editing:
         editView.inputFirstName(newFirstName);
-        editView.inputBirthday(newBirthday, systemLocale);
+        editView.inputBirthday(newBirthdayString);
         editView.changeStatusByStatusName(newStatus);
         editView.inputEmail(newEmail);
 
@@ -81,7 +81,7 @@ public class CustomerAdministrationTest {
 
         // Create screenshot:
         File scrFile0  = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile0, new File("./target/screenshot_editExistingCustomerOnFirstName_editing.png"));
+        FileUtils.copyFile(scrFile0, new File("./target/screenshot_whenFilterExistingCustomerOnFirstName_editExistingCustomer_saveViaButtonSucceeds_editing.png"));
 
         editView.saveChanges();
 
@@ -90,12 +90,6 @@ public class CustomerAdministrationTest {
 
         // reset search filter:
         homePage.resetSearch();
-
-        // execute the search for last name again:
-        // homePage.search(searchTermExistingCustomerLastName);
-
-        // wait for 1 s to allow results to arrive:
-        // Thread.sleep(1000);
 
         // open another (new) editor view to assert all changes (not all changed values are displayed in list):
         // AddressBookFormView newEditView = homePage.openEditFormViewFromFilterResultRowByLastName(searchTermExistingCustomerLastName);
@@ -106,7 +100,7 @@ public class CustomerAdministrationTest {
 
         // Create screenshot:
         File scrFile2  = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile2, new File("./target/screenshot_editExistingCustomerOnFirstName_final.png"));
+        FileUtils.copyFile(scrFile2, new File("./target/screenshot_whenFilterExistingCustomerOnFirstName_editExistingCustomer_saveViaButtonSucceeds_final.png"));
 
         // assert:
         Assert.assertEquals(newEditView.getFirstNameFromInputField(), newFirstName);
@@ -116,6 +110,7 @@ public class CustomerAdministrationTest {
         // Assert.assertEquals(newEditView.getBirthdayFromInputField(), "05/23/1971" ); // deactivated due to issues with String formatting
     }
 
+
     @Test(enabled = true)
     public void createNewCustomer_Assert_AndDelete() throws IOException, InterruptedException, ParseException  {
 
@@ -124,7 +119,8 @@ public class CustomerAdministrationTest {
         String newFirstName = UUID.randomUUID().toString();
         String newEmail = newFirstName + "." + newLastName + "@hotmail.com";
         String newStatus = "ImportedLead"; // Customer // ImportedLead  // ClosedLost
-        Date newBirthday = new SimpleDateFormat("dd/MM/yyyy").parse("23/08/1964");
+        Date newBirthday = new SimpleDateFormat("dd/MM/yyyy").parse("11/09/1963");
+        String newBirthdayString = getFormattedDateString(newBirthday, systemLocale);
 
         // wait for 1 s for page to load:
         Thread.sleep(1000);
@@ -138,7 +134,7 @@ public class CustomerAdministrationTest {
         // do the editing:
         editView.inputFirstName(newFirstName);
         editView.inputLastName(newLastName);
-        editView.inputBirthday(newBirthday, systemLocale);
+        editView.inputBirthday(newBirthdayString);
         editView.changeStatusByStatusName(newStatus);
         editView.inputEmail(newEmail);
 
@@ -206,6 +202,15 @@ public class CustomerAdministrationTest {
 
     }
 
+    /**
+     * Helper method to convert Date object to string formatted correctly for the address book input field.
+     * TODO: not really working well enough (shall also be used for assertions, but while input field accepts formats such as 07/31/1977
+     * , a readout sometimes returns sloppy-formatted values with single digit components such as "7/4/22"; also the requirements and treatment
+     * of year values is not yet understood - ASK DEVELOPMENT!)...
+     * @param date
+     * @param locale
+     * @return
+     */
     private String getFormattedDateString(Date date, Locale locale) {
             // Create formatted String for system locale from birthdate Date object:
             DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT, locale);

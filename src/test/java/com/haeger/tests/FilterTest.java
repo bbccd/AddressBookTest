@@ -23,10 +23,6 @@ public class FilterTest {
 
     WebDriver driver;
     AddressBookHomePage homePage;
-
-    // String url = "192.168.0.10";
-    // String port = "8080";
-    
     
 
     @BeforeMethod
@@ -46,7 +42,6 @@ public class FilterTest {
     }
 
     public void findExistingCustomerByLastName() throws IOException, InterruptedException  {
-        // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
         String searchTermExistingCustomerLastName = "Olsen";
 
@@ -68,8 +63,8 @@ public class FilterTest {
         FileUtils.copyFile(scrFile, new File("./target/screenshot_findExistingCustomerByLastName.png"));
     }
 
+
     public void findExistingCustomerByFirstName() throws IOException, InterruptedException  {
-        // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
         String searchTermExistingCustomerFirstName = "Katelyn";
 
@@ -91,8 +86,8 @@ public class FilterTest {
         FileUtils.copyFile(scrFile, new File("./target/screenshot_findExistingCustomerByFirstName.png"));
     }
 
+
     public void filterNonExistingCustomerComesUpEmpty() throws IOException, InterruptedException  {
-        // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
         // create UUID as name of customer guaranteed not to exist
         String uuid = UUID.randomUUID().toString();
@@ -115,10 +110,10 @@ public class FilterTest {
         FileUtils.copyFile(scrFile, new File("./target/screenshot_filterNonExistingCustomerComesUpEmpty.png"));
     }
 
-    public void resetFilterResetsResultsList() throws IOException, InterruptedException  {
-        // AddressBookHomePage homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
 
-        // create UUID as name of customer guaranteed not to exist
+    public void resetFilterResetsResultsList() throws IOException, InterruptedException  {
+
+        // create random UUID as name of customer that is guaranteed not to exist
         String uuid = UUID.randomUUID().toString();
 
         // wait for 1 s to allow page to load:
