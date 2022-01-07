@@ -1,20 +1,16 @@
 package com.haeger.tests;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 // import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.io.IOException;
@@ -127,7 +123,6 @@ public class CustomerAdministrationTest {
     }
 
 
-    @Test
     public void createNewCustomer_Assert_AndDelete() throws IOException, InterruptedException, ParseException  {
 
         // Define valid test data for a new customer that is guaranteed not to exist:

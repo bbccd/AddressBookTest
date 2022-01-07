@@ -57,7 +57,7 @@ public class FilterTest {
         driver.quit();
     }
 
-    @Test
+
     public void findExistingCustomerByLastName() throws IOException, InterruptedException  {
 
         String searchTermExistingCustomerLastName = "Olsen";
