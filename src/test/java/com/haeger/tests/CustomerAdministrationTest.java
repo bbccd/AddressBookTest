@@ -1,5 +1,8 @@
 package com.haeger;
 
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
@@ -12,6 +15,7 @@ import org.testng.Assert;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +34,8 @@ public class CustomerAdministrationTest {
     WebDriver driver;
     AddressBookHomePage homePage;
 
+    String nodeURL;
+
     Locale systemLocale = Locale.getDefault();
 
     @BeforeMethod
@@ -37,9 +43,18 @@ public class CustomerAdministrationTest {
         // set path of driver executables:
         // System.setProperty("webdriver.chrome.driver", "./src/test/resources/drivers/chromedriver");
         // System.setProperty("webdriver.gecko.driver", "./src/test/resources/drivers/geckodriver");
-        
+
         // initialize new WebDriver session:
-        driver = new ChromeDriver(); // FirefoxDriver();
+//        driver = new ChromeDriver(); // FirefoxDriver();
+
+        // set up Selenium Grid (i.e., remote web driver):
+        nodeURL = "http://192.168.0.7:4444";
+        ChromeOptions chromeOptions = new ChromeOptions();
+//        DesiredCapabilities capability = DesiredCapabilities.chrome();
+//        capability.setBrowserName("chrome");
+//        capability.setPlatform(Platform.MAC);
+        driver = new RemoteWebDriver(new URL(nodeURL), chromeOptions);
+
         homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
     }
 
