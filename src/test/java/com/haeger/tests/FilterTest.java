@@ -1,18 +1,21 @@
-package com.haeger;
+package com.haeger.tests;
 
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
-
+// Selenium imports:
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 // import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+// JUnit imports:
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+// Other helper imports:
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +25,6 @@ import com.haeger.AddressBookHomePage;
 
 import org.apache.commons.io.FileUtils;
 
-@Test(enabled = true)
 public class FilterTest {
 
     WebDriver driver;
@@ -30,7 +32,7 @@ public class FilterTest {
 
     String nodeURL;
 
-    @BeforeMethod
+    @BeforeEach
     public void beforeMethod() throws IOException {
         // set path of driver executables:
         // System.setProperty("webdriver.chrome.driver", "./src/test/resources/drivers/chromedriver");
@@ -40,7 +42,7 @@ public class FilterTest {
 //        driver = new ChromeDriver(); // FirefoxDriver();
 
         // set up Selenium Grid (i.e., remote web driver):
-        nodeURL = "http://192.168.0.7:4444";
+        nodeURL = "http://192.168.0.4:4444";
         ChromeOptions chromeOptions = new ChromeOptions();
 //        DesiredCapabilities capability = DesiredCapabilities.chrome();
 //        capability.setBrowserName("chrome");
@@ -50,11 +52,12 @@ public class FilterTest {
         homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
     }
 
-    @AfterMethod
+    @AfterEach
     public void afterMethod() {
         driver.quit();
     }
 
+    @Test
     public void findExistingCustomerByLastName() throws IOException, InterruptedException  {
 
         String searchTermExistingCustomerLastName = "Olsen";
@@ -70,7 +73,7 @@ public class FilterTest {
 
         // assert that results were found:
         int numberOfResults = homePage.countFilterResults();
-        Assert.assertTrue(numberOfResults >= 1);
+        assertTrue(numberOfResults >= 1);
 
         // Create screenshot:
         File scrFile  = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -93,7 +96,7 @@ public class FilterTest {
 
         // assert that results were found:
         int numberOfResults = homePage.countFilterResults();
-        Assert.assertTrue(numberOfResults >= 1);
+        assertTrue(numberOfResults >= 1);
 
         // Create screenshot:
         File scrFile  = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -117,7 +120,7 @@ public class FilterTest {
 
         // assert that no results were found:
         int numberOfResults = homePage.countFilterResults();
-        Assert.assertTrue(numberOfResults == 0);
+        assertTrue(numberOfResults == 0);
 
         // Create screenshot:
         File scrFile  = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -141,7 +144,7 @@ public class FilterTest {
 
         // assert that no results were found:
         int numberOfResultsDuringFilter = homePage.countFilterResults();
-        Assert.assertTrue(numberOfResultsDuringFilter == 0);
+        assertTrue(numberOfResultsDuringFilter == 0);
 
         // reset search filter:
         homePage.resetSearch();
@@ -151,7 +154,7 @@ public class FilterTest {
 
         // assert that datasets are displayed again in list:
         int numberOfResults = homePage.countFilterResults();
-        Assert.assertTrue(numberOfResults > 9);
+        assertTrue(numberOfResults > 9);
 
         // Create screenshot:
         File scrFile  = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);

@@ -1,17 +1,20 @@
-package com.haeger;
+package com.haeger.tests;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 // import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +31,6 @@ import com.haeger.AddressBookFormView;
 
 import org.apache.commons.io.FileUtils;
 
-@Test(enabled = true)
 public class CustomerAdministrationTest {
 
     WebDriver driver;
@@ -38,7 +40,7 @@ public class CustomerAdministrationTest {
 
     Locale systemLocale = Locale.getDefault();
 
-    @BeforeMethod
+    @BeforeEach
     public void beforeMethod() throws IOException {
         // set path of driver executables:
         // System.setProperty("webdriver.chrome.driver", "./src/test/resources/drivers/chromedriver");
@@ -48,7 +50,7 @@ public class CustomerAdministrationTest {
 //        driver = new ChromeDriver(); // FirefoxDriver();
 
         // set up Selenium Grid (i.e., remote web driver):
-        nodeURL = "http://192.168.0.7:4444";
+        nodeURL = "http://192.168.0.4:4444";
         ChromeOptions chromeOptions = new ChromeOptions();
 //        DesiredCapabilities capability = DesiredCapabilities.chrome();
 //        capability.setBrowserName("chrome");
@@ -58,13 +60,12 @@ public class CustomerAdministrationTest {
         homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
     }
 
-    @AfterMethod
+    @AfterEach
     public void afterMethod() {
         driver.quit();
     }
 
 
-    @Test(enabled = true)
     public void whenFilterExistingCustomerOnFirstName_editExistingCustomer_saveViaButtonSucceeds() throws IOException, InterruptedException, ParseException  {
 
         // Define test data:
@@ -118,15 +119,15 @@ public class CustomerAdministrationTest {
         FileUtils.copyFile(scrFile2, new File("./target/screenshot_whenFilterExistingCustomerOnFirstName_editExistingCustomer_saveViaButtonSucceeds_final.png"));
 
         // assert:
-        Assert.assertEquals(newEditView.getFirstNameFromInputField(), newFirstName);
-        Assert.assertEquals(newEditView.getLastNameFromInputField(), searchTermExistingCustomerLastName);
-        Assert.assertEquals(newEditView.getEmailFromInputField(), newEmail);
-        Assert.assertEquals(newEditView.getStatusFromDropdown(), newStatus);
+        assertEquals(newEditView.getFirstNameFromInputField(), newFirstName);
+        assertEquals(newEditView.getLastNameFromInputField(), searchTermExistingCustomerLastName);
+        assertEquals(newEditView.getEmailFromInputField(), newEmail);
+        assertEquals(newEditView.getStatusFromDropdown(), newStatus);
         // Assert.assertEquals(newEditView.getBirthdayFromInputField(), "05/23/1971" ); // deactivated due to issues with String formatting
     }
 
 
-    @Test(enabled = true)
+    @Test
     public void createNewCustomer_Assert_AndDelete() throws IOException, InterruptedException, ParseException  {
 
         // Define valid test data for a new customer that is guaranteed not to exist:
@@ -176,7 +177,7 @@ public class CustomerAdministrationTest {
 
         // Assert that we got exactly one filter result for the new full name (proving that exactly one data set has been created):
         int numberOfFilterResults = homePage.countFilterResults();
-        Assert.assertEquals(numberOfFilterResults, 1);
+        assertEquals(numberOfFilterResults, 1);
 
         // wait for 1 s to allow results to arrive:
         Thread.sleep(1000);
@@ -186,10 +187,10 @@ public class CustomerAdministrationTest {
         FileUtils.copyFile(scrFile2, new File("./target/screenshot_createNewCustomer_Assert_AndDelete_created.png"));
 
         // assert that all values have been stored:
-        Assert.assertEquals(newEditView.getFirstNameFromInputField(), newFirstName);
-        Assert.assertEquals(newEditView.getLastNameFromInputField(), newLastName);
-        Assert.assertEquals(newEditView.getEmailFromInputField(), newEmail);
-        Assert.assertEquals(newEditView.getStatusFromDropdown(), newStatus);
+        assertEquals(newEditView.getFirstNameFromInputField(), newFirstName);
+        assertEquals(newEditView.getLastNameFromInputField(), newLastName);
+        assertEquals(newEditView.getEmailFromInputField(), newEmail);
+        assertEquals(newEditView.getStatusFromDropdown(), newStatus);
         // Assert.assertEquals(newEditView.getBirthdayFromInputField(), "05/23/1971" ); // deactivated due to issues with String formatting
 
         // delete the new customer:
@@ -213,7 +214,7 @@ public class CustomerAdministrationTest {
 
         // Assert that now we got exactly ZERO filter results (proving that the new customer's data set has been successfully deleted again):
         int numberOfFilterResultsAfterDeletion = homePage.countFilterResults();
-        Assert.assertEquals(numberOfFilterResultsAfterDeletion, 0);
+        assertEquals(numberOfFilterResultsAfterDeletion, 0);
 
     }
 
