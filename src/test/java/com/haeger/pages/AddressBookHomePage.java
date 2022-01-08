@@ -2,7 +2,6 @@ package com.haeger;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By.ByClassName;
 
 import java.util.List;
 
@@ -10,7 +9,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.haeger.AddressBookFormView;
 
 public class AddressBookHomePage {
 
@@ -69,7 +67,6 @@ public class AddressBookHomePage {
         Thread.sleep(1000);
         List <WebElement> filterResultsList = driver.findElements(By.cssSelector("tr.v-grid-row-has-data"));
         if (!filterResultsList.isEmpty()) {
-            System.out.println("Counting filter results: " + filterResultsList.size());
             WebElement nameTableItem = filterResultsList.get(0);
             nameTableItem.click();
         }
@@ -130,7 +127,6 @@ public class AddressBookHomePage {
         // List <WebElement> filterResultsList = driver.findElements(By.className("v-grid-row-has-data"));
         // List <WebElement> filterResultsList = driver.findElements(By.xpath("//table/tbody/tr [@class='v-grid-row-has-data']"));
         List <WebElement> filterResultsList = driver.findElements(By.cssSelector("tr.v-grid-row-has-data"));
-        // System.out.println("Counting filter results: " + filterResultsList.size());
         return filterResultsList.size();
     }
 

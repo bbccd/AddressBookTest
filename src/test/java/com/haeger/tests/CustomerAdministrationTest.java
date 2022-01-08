@@ -48,9 +48,6 @@ public class CustomerAdministrationTest {
         // set up Selenium Grid (i.e., remote web driver):
         nodeURL = "http://192.168.0.4:4444";
         ChromeOptions chromeOptions = new ChromeOptions();
-//        DesiredCapabilities capability = DesiredCapabilities.chrome();
-//        capability.setBrowserName("chrome");
-//        capability.setPlatform(Platform.MAC);
         driver = new RemoteWebDriver(new URL(nodeURL), chromeOptions);
 
         homePage = PageFactory.initElements(driver, AddressBookHomePage.class);
@@ -104,7 +101,6 @@ public class CustomerAdministrationTest {
         homePage.resetSearch();
 
         // open another (new) editor view to assert all changes (not all changed values are displayed in list):
-        // AddressBookFormView newEditView = homePage.openEditFormViewFromFilterResultRowByLastName(searchTermExistingCustomerLastName);
         AddressBookFormView newEditView = homePage.filterByFullNameAndOpenEditFormViewFromFilterResultRowByFullName(newFirstName, searchTermExistingCustomerLastName);
 
         // wait for 1 s to allow results to arrive:

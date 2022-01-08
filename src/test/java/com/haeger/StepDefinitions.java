@@ -53,7 +53,6 @@ public class StepDefinitions {
 
     @Before
     public void initializeRandomNewCustomerParameters() throws ParseException {
-
         // Define random values for creation of new data sets in test cases:
         newLastName = UUID.randomUUID().toString();  // we use UUIDs as name values; they are practically guaranteed not to exist
         newFirstName = UUID.randomUUID().toString();
@@ -91,8 +90,10 @@ public class StepDefinitions {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         // execute the search:
         homePage.search(searchTermExistingCustomerLastName);
+
         // wait for 1 s to allow results to arrive:
         try {
             Thread.sleep(1000);
@@ -103,16 +104,18 @@ public class StepDefinitions {
 
     @When("I filter for an existing customer by first name")
     public void i_filter_for_an_existing_customer_by_first_name() {
-
         String searchTermExistingCustomerFirstName = "Katelyn";
+
         // wait for 1 s to allow page to load:
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         // execute the search:
         homePage.search(searchTermExistingCustomerFirstName);
+
         // wait for 1 s to allow results to arrive:
         try {
             Thread.sleep(1000);
@@ -147,8 +150,10 @@ public class StepDefinitions {
 
     @And("reset the filter")
     public void reset_the_filter() throws InterruptedException {
+
         // reset search filter:
         homePage.resetSearch();
+
         // wait for 1 s to allow results to arrive:
         Thread.sleep(1000);
     }
@@ -248,6 +253,7 @@ public class StepDefinitions {
     @And("filter again by the random first and last names")
     public void filterAgainByTheRandomFirstAndLastNames() throws InterruptedException {
         editView = homePage.filterByFullNameAndOpenEditFormViewFromFilterResultRowByFullName(newFirstName, newLastName);
+
         // wait for 1 s to allow results to arrive:
         Thread.sleep(1000);
     }
@@ -289,7 +295,7 @@ public class StepDefinitions {
         // Create formatted String for system locale from birthdate Date object:
         DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT, locale);
         String dateString = format.format(date);
-        System.out.println("Birthday input string for system locale: " + dateString);
+        // System.out.println("Birthday input string for system locale: " + dateString);
         return dateString;
     }
 }
